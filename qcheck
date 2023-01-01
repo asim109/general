@@ -1,0 +1,21 @@
+#!/bin/bash
+x=`date`
+q=`find /var/spool/postfix/deferred -type f | wc -l`
+
+if [ "$q" = "" ]
+
+then
+
+zero="0"
+
+echo "$zero mails are in spam-protect queue @ $x" > /tmp/mailzinq
+
+/usr/local/sbin/sendEmail -f nms@nexlinx.net.pk -t noc@nexlinx.net.pk -u ""$zero" mails @ "$x" in spam-protect queue" -s 202.59.80.137 -o reply-to=noc@nexlinx.net.pk -o message-file=/tmp/mailzinq -l /tmp/soutput.txt -v
+
+else
+
+echo "$q mails are in spam-protect queue @ $x" > /tmp/mailzinq
+
+/usr/local/sbin/sendEmail -o tls=no -f nms@nexlinx.net.pk -t noc@nexlinx.net.pk -u ""$q" mails @ "$x" in spam-protect queue" -s 202.59.80.137 -o reply-to=noc@nexlinx.net.pk -o message-file=/tmp/mailzinq -l /tmp/soutput.txt -v
+fi
+exit 0
